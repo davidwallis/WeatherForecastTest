@@ -27,6 +27,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
     - name: Build the Docker image
+      working-directory: WeatherForecastTest
       run: pwd && ls && docker build . -t ${{ secrets.DOCKERHUB_USERNAME }}/weatherforecasttest:latest
 
     - name: Log into Docker Hub
