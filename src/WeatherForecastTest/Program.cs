@@ -4,8 +4,8 @@ using WeatherForecastTest.OpenTelemetry;
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("secrets/appsettings.secrets.json", optional: true) // https://anthonychu.ca/post/aspnet-core-appsettings-secrets-kubernetes/
     .AddEnvironmentVariables()
-    .AddCommandLine(args)
     .Build();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +31,7 @@ if (app.Environment.IsNotProduction())
 
 app.AddTraceResponseHeader();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
