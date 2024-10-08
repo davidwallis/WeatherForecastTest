@@ -7,6 +7,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+    SERVICE_NAME: weatherforecasttest
+    
 jobs:
   build:
 
@@ -29,7 +32,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
     - name: Build the Docker image
-      run: pwd && ls && docker build . -t ${{ secrets.DOCKERHUB_USERNAME }}/weatherforecasttest:latest -f WeatherForecastTest/Dockerfile
+      run: pwd && ls && docker build . -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.SERVICE_NAME }}:latest -f WeatherForecastTest/Dockerfile
 
     - name: Log into Docker Hub
       uses: docker/login-action@v3
@@ -38,4 +41,23 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Push the image to Docker Hub
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/weatherforecasttest
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.SERVICE_NAME }}
+
+    - name: get repository name
+      run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+
+    - name: Generate App Version
+      run: |
+        # echo APP_VERSION=`git describe --tags --always` >> $GITHUB_ENV
+        echo APP_VERSION=1.1.1
+
+    - name: helm package chart
+      run: |
+        helm package ../charts/${{ env.SERVICE_NAME }}/helm/${{ env.SERVICE_NAME }} --app-version=${{ env.APP_VERSION }} --version=${{ env.APP_VERSION }} -d ../artifacts
+
+
+    - name: helm push chart
+      # OCI artifacts on Docker Hub 
+      # see: https://docs.docker.com/docker-hub/oci-artifacts/
+      run: |
+          helm push ../artifacts/${{ env.SERVICE_NAME }}-${{ env.APP_VERSION }}.tgz oci://${{ secrets.DOCKERHUB_USERNAME }}/${{ env.SERVICE_NAME }}
