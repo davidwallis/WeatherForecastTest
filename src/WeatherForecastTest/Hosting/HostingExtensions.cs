@@ -9,7 +9,7 @@
         /// <returns>True if the environment name is not <see cref="Environments.Production"/>, otherwise false.</returns>
         public static bool IsNotProduction(this IHostEnvironment hostEnvironment)
         {
-            if (hostEnvironment == null) throw new ArgumentNullException(nameof(hostEnvironment));
+            ArgumentNullException.ThrowIfNull(hostEnvironment);
 
             return !hostEnvironment.IsEnvironment(Environments.Production);
         }
