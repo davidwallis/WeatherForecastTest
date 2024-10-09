@@ -53,7 +53,7 @@ jobs:
 
     - name: helm package chart
       run: |
-        helm package ../charts/${{ env.SERVICE_NAME }}/helm/${{ env.SERVICE_NAME }} --app-version=${{ env.APP_VERSION }} --version=${{ env.APP_VERSION }} -d ../artifacts
+        helm package ../charts/${{ env.SERVICE_NAME }} --app-version=${{ env.APP_VERSION }} --version=${{ env.APP_VERSION }} -d ../artifacts
 
 
     - name: helm push chart
