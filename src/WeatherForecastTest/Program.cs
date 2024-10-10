@@ -1,12 +1,12 @@
 using WeatherForecastTest.Hosting;
 using WeatherForecastTest.OpenTelemetry;
 
-var configuration = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-    .AddJsonFile("secrets/appsettings.secrets.json", optional: true) // https://anthonychu.ca/post/aspnet-core-appsettings-secrets-kubernetes/
-    .AddEnvironmentVariables()
-    .Build();
+//var configuration = new ConfigurationBuilder()
+//    .SetBasePath(Directory.GetCurrentDirectory())
+//    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+//    .AddJsonFile("secrets/appsettings.secrets.json", optional: true) // https://anthonychu.ca/post/aspnet-core-appsettings-secrets-kubernetes/
+//    .AddEnvironmentVariables()
+//    .Build();
 
 var builder = WebApplication.CreateBuilder(args);
 

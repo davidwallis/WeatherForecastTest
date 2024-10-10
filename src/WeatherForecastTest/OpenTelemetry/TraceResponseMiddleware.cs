@@ -2,23 +2,16 @@
 
 namespace WeatherForecastTest.OpenTelemetry
 {
-    public class TraceResponseMiddleware
+    public class TraceResponseMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-
-        public TraceResponseMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
-
         public async Task InvokeAsync(HttpContext context)
         {
             context.Response.OnStarting(() => {
-                context.Response.Headers.Add("traceresponse", Activity.Current?.Id);
+                context.Response.Headers.Append("traceresponse", Activity.Current?.Id);
                 return Task.FromResult(0);
             });
 
-            await _next(context);
+            await next(context);
         }
     }
 }
