@@ -23,9 +23,9 @@ jobs:
       run: |
         echo "REPO_LC=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
         echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#davidwallis/}" >> "${GITHUB_ENV}"
-        echo "REPOSITORY_NAME1=${REPOSITORY_NAME,,}" >> "${GITHUB_ENV}"
-        echo "REPOSITORY_NAME2=${GITHUB_REPOSITORY#davidwallis/}" >> "${GITHUB_ENV}"
-        echo "REPOSITORY_NAME3=${REPO_LC#davidwallis/}" >> "${GITHUB_ENV}"
+        echo "REPOSITORY_NAME1=${env.REPOSITORY_NAME,,}" >> "${GITHUB_ENV}"
+        # echo "REPOSITORY_NAME2=${GITHUB_REPOSITORY#davidwallis/}" >> "${GITHUB_ENV}"
+        # echo "REPOSITORY_NAME3=${REPO_LC#davidwallis/}" >> "${GITHUB_ENV}"
 
     - name: debug step
       run: echo "$GITHUB_CONTEXT"
