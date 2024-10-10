@@ -17,14 +17,14 @@ jobs:
         run:
             working-directory: ./src
     steps:
+    - uses: actions/checkout@v4
+
     - name: get repository name in lowercase
       run: |
         echo "REPOSITORY_NAME=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
 
     - name: debug step
       run: echo "$GITHUB_CONTEXT"
-
-    - uses: actions/checkout@v4
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
