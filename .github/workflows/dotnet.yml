@@ -31,7 +31,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
     - name: Build the Docker image
-      run: docker build . --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY_NAME }}:latest -file WeatherForecastTest/Dockerfile
+      run: docker build . --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY_NAME }}:latest --file WeatherForecastTest/Dockerfile
 
     - name: debug step
       run: pwd && ls && ls ../
