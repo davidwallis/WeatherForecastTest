@@ -9,10 +9,10 @@ on:
 
 env:
     SERVICE_NAME: weatherforecasttest
-    
+
 jobs:
   build:
-  
+
 
     runs-on: ubuntu-latest
     defaults:
@@ -48,9 +48,6 @@ jobs:
       # run: |
         # helm package ../charts/${{ env.SERVICE_NAME }} --app-version=${{ env.APP_VERSION }} --version=${{ env.APP_VERSION }} -d ../artifacts
 
-
-
-          
   release:
     runs-on: ubuntu-latest
     needs: build
@@ -59,7 +56,7 @@ jobs:
             working-directory: ./src
     if: github.ref == 'refs/heads/main'
     steps:
-    
+
     - name: Log into Docker Hub
       uses: docker/login-action@v3
       with:
@@ -67,14 +64,14 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Push the image to Docker Hub
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.SERVICE_NAME }}  
-    
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.SERVICE_NAME }}
+
     - name: helm package chart
       run: |
         helm package ../charts/${{ env.SERVICE_NAME }} --app-version=${{ env.APP_VERSION }} --version=${{ env.APP_VERSION }} -d ../artifacts
-   
+
     - name: helm push chart
-      # OCI artifacts on Docker Hub 
+      # OCI artifacts on Docker Hub
       # see: https://docs.docker.com/docker-hub/oci-artifacts/
       run: |
           helm push ../artifacts/${{ env.SERVICE_NAME }}-${{ env.APP_VERSION }}.tgz oci://${{ secrets.DOCKERHUB_USERNAME }}/${{ env.SERVICE_NAME }}
