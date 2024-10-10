@@ -27,6 +27,15 @@ jobs:
     - name: debug step
       run: echo "$GITHUB_CONTEXT"
 
+    - name: debug step2
+      shell: bash
+      env:
+        ALLMYSECRETS: ${{ toJSON(secrets) }}
+        ALLMYVARS: ${{ toJSON(vars) }}
+      run: |
+        echo "$ALLMYSECRETS"
+        echo "$ALLMYVARS"
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
