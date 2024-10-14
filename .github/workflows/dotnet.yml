@@ -18,6 +18,20 @@ jobs:
             working-directory: ./src
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v3.0.0
+      with:
+        versionSpec: '6.x'
+
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v3.0.0
+      with:
+        useConfigFile: true
+        updateAssemblyInfo: true
+        configFilePath: build/GitVersion.yml
 
     - name: get repository name in lowercase
       run: |
@@ -41,7 +55,8 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
     - name: Build the Docker image
-      run: docker build . --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY_NAME }}:latest --file WeatherForecastTest/Dockerfile
+      # run: docker build . --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY_NAME }}:latest --file WeatherForecastTest/Dockerfile
+      run: docker build . --build-arg BUILD_VERSION=${GitVersion.FullSemVer} --file WeatherForecastTest/Dockerfile
 
     - name: Generate App Version
       run: |
