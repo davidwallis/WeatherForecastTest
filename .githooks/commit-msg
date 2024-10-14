@@ -1,0 +1,2 @@
+#!/bin/sh
+powershell -windowstyle hidden -noprofile ./hooks/EnsureConventionalCommitMessage.ps1 $1

@@ -1,3 +1,10 @@
+## Getting Started
+
+### Configuring GitHooks
+
+``` git config --local include.path .\.gitconfig ```
+
+
 ## Changes
 
 
