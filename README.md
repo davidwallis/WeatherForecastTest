@@ -2,6 +2,8 @@
 
 ### Configuring GitHooks
 
+The following command can be run to configure git to run the appropriate hooks, assuming the working directory is the root of the git repository.
+
 ``` git config --local include.path .\.gitconfig ```
 
 
