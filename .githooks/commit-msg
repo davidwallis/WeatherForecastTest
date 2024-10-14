@@ -1,4 +1,4 @@
 #!/bin/sh
-# powershell -windowstyle hidden -noprofile ./.githooks/EnsureConventionalCommitMessage.ps1 $1
-#c:\\users\\dwallis\\Desktop\\powershel.exe -windowstyle hidden -noprofile ./.githooks/EnsureConventionalCommitMessage.ps1 $1
-c:\\users\\dwallis\\Desktop\\powershel.exe -noprofile ./.githooks/EnsureConventionalCommitMessage.ps1 $1
+powershell -windowstyle hidden -noprofile ./.githooks/EnsureConventionalCommitMessage.ps1 $1
+# c:\\users\\dwallis\\Desktop\\powershel.exe -windowstyle hidden -noprofile ./.githooks/EnsureConventionalCommitMessage.ps1 $1
+# c:\\users\\dwallis\\Desktop\\powershel.exe -noprofile ./.githooks/EnsureConventionalCommitMessage.ps1 $1
