@@ -1,29 +1,9 @@
 #!/bin/sh
-#powershell -noexit -noprofile ./.githooks/EnsureConventionalCommitMessage.ps1 $1
-
-# commit_regex='(?-i)^(initial commit|merge [^\r\n]+|(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w\-\.]+\))?(!)?: ([\w ])+([\s\S]*))'
-# error_msg="Commit message format must match regex ${commit_regex}"
-# # if ! grep -qEi "$commit_regex" "$1"; then
-# #     echo "$error_msg" >&2
-# #     exit 1
-# # fi
-
-# MSG=$(HEAD -n1 "$1")
-# if ! [[ $MSG =~ ^(initial commit|merge [^\r\n]+|(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w\-\.]+\))?(!)?: ([\w ])+([\s\S]*)) ]]; then
-
-# echo $MSG
-#     echo "$error_msg" >&2
-#     exit 1
-# fi
-
-
-
-YOUR_COMMIT_MESSAGE=$(HEAD -n1 "$1")
+COMMIT_MESSAGE=$(HEAD -n1 "$1")
 
 CONVENTIONAL_COMMIT_PATTERN="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .+"
 
-if ! [[ "$YOUR_COMMIT_MESSAGE" =~ $CONVENTIONAL_COMMIT_PATTERN ]]; then
-  # Commit message is not valid
+if ! [[ "$COMMIT_MESSAGE" =~ $CONVENTIONAL_COMMIT_PATTERN ]]; then
   echo "Error: Commit message is not allowed."
   echo "Reason: Your commit message does not comply with this pattern: $CONVENTIONAL_COMMIT_PATTERN"
   echo "Todo: Rewrite your commit message to comply with the pattern."
