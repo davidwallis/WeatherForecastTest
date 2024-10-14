@@ -4,9 +4,7 @@ COMMIT_MESSAGE=$(HEAD -n1 "$1")
 CONVENTIONAL_COMMIT_PATTERN="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .+"
 
 if ! [[ "$COMMIT_MESSAGE" =~ $CONVENTIONAL_COMMIT_PATTERN ]]; then
-  echo "Error: Commit message is not allowed."
-  echo "Reason: Your commit message does not comply with this pattern: $CONVENTIONAL_COMMIT_PATTERN"
-  echo "Todo: Rewrite your commit message to comply with the pattern."
+  echo "Error: Your commit message does not comply with this pattern: $CONVENTIONAL_COMMIT_PATTERN"
   echo 'Here are some examples:'
   echo '- "feat: Add user onboarding tutorial"'
   echo '- "fix: Fix chat message overflow"'
