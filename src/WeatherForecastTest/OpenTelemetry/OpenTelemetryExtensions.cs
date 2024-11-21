@@ -1,3 +1,4 @@
+using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -15,7 +16,7 @@ namespace WeatherForecastTest.OpenTelemetry
             this WebApplicationBuilder builder)
         {
 
-            builder.Services.AddOpenTelemetry()
+            builder.Services.AddOpenTelemetry().UseOtlpExporter()
                 .ConfigureResource(r => r
                     .AddService(
                         serviceName: builder.Configuration.GetValue("ServiceName", defaultValue: "otel-test")!,
@@ -36,22 +37,21 @@ namespace WeatherForecastTest.OpenTelemetry
                     .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
                     .AddProcessInstrumentation()
-                    .AddPrometheusExporter()
                 );
 
 
-                builder.Services.AddLogging((loggingBuilder => loggingBuilder
-                        .ClearProviders()
-                        .AddOpenTelemetry(openTelemetry =>
-                        {
-                            openTelemetry.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName: builder.Configuration.GetValue("ServiceName", defaultValue: "otel-test")!));
-                            openTelemetry.IncludeFormattedMessage = true;
-                            openTelemetry.IncludeScopes = true;
-                            openTelemetry.ParseStateValues = true;
-                        })
-                    ));
+            builder.Services.AddLogging((loggingBuilder => loggingBuilder
+                    .ClearProviders()
+                    .AddOpenTelemetry(openTelemetry =>
+                    {
+                        openTelemetry.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName: builder.Configuration.GetValue("ServiceName", defaultValue: "otel-test")!));
+                        openTelemetry.IncludeFormattedMessage = true;
+                        openTelemetry.IncludeScopes = true;
+                        openTelemetry.ParseStateValues = true;
+                    })
+                ));
 
-                
+
         }
     }
 }
